@@ -1,4 +1,5 @@
 <?php require_once 'app/views/templates/header.php' ?>
+session_start();
 <div class="container">
     <div class="page-header" id="banner">
         <div class="row">
