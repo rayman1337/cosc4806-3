@@ -1,13 +1,20 @@
-<footer class="footer">    
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Copyright &copy; <?php echo date('Y'); ?> </p>
-        </div>
-    </div>
+<footer class="footer">
+    <style>
+        .footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #f8f9fa;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+
+    <p>&copy; <?= date('Y') ?> | All rights reserved.</p>
 </footer>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
