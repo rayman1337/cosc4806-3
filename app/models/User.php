@@ -18,34 +18,12 @@ class User {
       return $rows;
     }
 
-    public function authenticate($username, $password) {
-        /*
-         * if username and password good then
-         * $this->auth = true;
-         */
-    $username = strtolower($username);
-    $db = db_connect();
-        $statement = $db->prepare("select * from users WHERE username = :name;");
-        $statement->bindValue(':name', $username);
-        $statement->execute();
-        $rows = $statement->fetch(PDO::FETCH_ASSOC);
+  public function logAuthenticationAttempts($username, $status) {
+      $db = db_connect();
+      $stmt = $db->prepare("INSERT INTO login_logs (username, attempt) VALUES (?, ?)");
+      $stmt->execute([$username, $status]);
+  }
 
-    if (password_verify($password, $rows['password'])) {
-      $_SESSION['auth'] = 1;
-      $_SESSION['username'] = ucwords($username);
-      unset($_SESSION['failedAuth']);
-      header('Location: /home');
-      die;
-    } else {
-      if(isset($_SESSION['failedAuth'])) {
-        $_SESSION['failedAuth'] ++; //increment
-      } else {
-        $_SESSION['failedAuth'] = 1;
-      }
-      header('Location: /login');
-      die;
-    }
-    }
 
 
   public function create_user($username, $password) {
