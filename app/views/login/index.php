@@ -77,7 +77,7 @@
 </style>
 
 <main role="main" class="container">
-	<h1>Assignment 3 – Login</h1>
+	<h2>Assignment 3 – Login</h2>
 
 	<?php if (!empty($data['error'])): ?>
 		<div class="message"><?= $data['error'] ?></div>
