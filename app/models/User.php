@@ -55,7 +55,18 @@ class User {
     $stmt->execute();
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['auth'] = 1;
+        $_SESSION['username'] = ucwords($username);
+        $this->logAuthenticationAttempts($username, 'good');
+        header('Location: /home');
+        exit;
+    } else {
+        $this->logAuthenticationAttempts($username, 'bad');
+        $_SESSION['error'] = "Invalid username or password.";
+        header('Location: /login');
+        exit;
+    }
   }
 
   public function create_user($username, $password) {
