@@ -24,6 +24,17 @@ class User {
       $stmt->execute([$username, $status]);
   }
 
+  public function getFailedAuthenticationAttempts($username) {
+      $db = db_connect();
+      $stmt = $db->prepare("
+          SELECT timestamp FROM login_logs 
+          WHERE username = ? AND attempt = 'bad' 
+          ORDER BY timestamp DESC 
+          LIMIT 3
+      ");
+      $stmt->execute([$username]);
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
 
 
   public function create_user($username, $password) {
