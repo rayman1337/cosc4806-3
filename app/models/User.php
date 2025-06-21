@@ -35,7 +35,23 @@ class User {
       $stmt->execute([$username]);
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+  
+  public function authenticate($username, $password) {
+      $username = strtolower($username);
+      $db = db_connect();
 
+      $recentFails = $this->getRecentFailedAttempts($username);
+      if (count($recentFails) === 3) {
+          $lastFailTime = strtotime($recentFails[0]['timestamp']);
+          if (time() - $lastFailTime < 60) {
+              $_SESSION['error'] = "Too many failed attempts. Try again in 60 seconds.";
+              header('Location: /login');
+              exit;
+          }
+      }
+
+
+  }
 
   public function create_user($username, $password) {
       $db = db_connect();
