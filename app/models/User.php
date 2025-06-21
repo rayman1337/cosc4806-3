@@ -40,7 +40,7 @@ class User {
       $username = strtolower($username);
       $db = db_connect();
 
-      $recentFails = $this->getRecentFailedAttempts($username);
+      $recentFails = $this->getFailedAuthenticationAttempts($username);
       if (count($recentFails) === 3) {
           $lastFailTime = strtotime($recentFails[0]['timestamp']);
           if (time() - $lastFailTime < 60) {
@@ -49,6 +49,11 @@ class User {
               exit;
           }
       }
+
+    $stmt = $db->prepare("SELECT * FROM users WHERE username = :name");
+    $stmt->bindValue(':name', $username);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
   }
